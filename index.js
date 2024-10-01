@@ -1,26 +1,20 @@
+const { log } = require('console');
 const express = require('express');
-const { url } = require('inspector');
-const app = express()
-const port = 3000 //variavel ambiente
+const app = express();
+const port = 3000 //variável ambiente
 
-const path = require("path")
-const basepath = path.join(__dirname, 'Aula1')
-const checkAuth = function (req, res, next) {
-    req.authStatus = true
-    if (req.authStatus) {
-        console.log('Está logado, pode continuar')
-    } else {
-        console.log('Não está logado, faça o login!')
-    }
-}
+const path = require("path");
+const users = require('./users')
 
-app.use(checkAuth)
+const basepath = path.join(__dirname);
+
+app.use('/users', users)
 
 app.get('/', (req, res) => {
-    res.sendFile(`${basepath}/index.html`)
-})
+    res.sendFile(`${basepath}/index.html`);
+
+});
 
 app.listen(port, () => {
-    console.log(`App está rodando na porta ${port}`)
-
-})
+    console.log(`App não explodiu "ainda"!\nPorta: ${port}`)
+});
