@@ -1,20 +1,25 @@
-const { log } = require('console');
 const express = require('express');
 const app = express();
-const port = 3000 //variável ambiente
+const port = 5000;
 
-const path = require("path");
-const users = require('./users')
+const path = require('path');
 
+app.use(express.static('public'))
+
+// Serving static files (like HTML)
 const basepath = path.join(__dirname);
 
-app.use('/users', users)
+// Serve users.html when accessing /users
+app.get('/users', (req, res) => {
+    res.sendFile(path.join(basepath, 'users.html'));
+});
 
+// Serve index.html when accessing /
 app.get('/', (req, res) => {
-    res.sendFile(`${basepath}/index.html`);
-
+    res.sendFile(path.join(basepath, 'index.html'));
 });
 
 app.listen(port, () => {
-    console.log(`App não explodiu "ainda"!\nPorta: ${port}`)
+    console.log(`App não explodiu "ainda"!\nPorta: ${port}`);
 });
+
